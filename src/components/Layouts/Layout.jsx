@@ -1,5 +1,6 @@
 import Header from "../Header";
 import Routers from "../../routers/Routers";
+import Footer from "../Footer";
 
 const Layout = () => {
   return (
@@ -8,6 +9,7 @@ const Layout = () => {
       <div>
         <Routers />
       </div>
+      <Footer/>
     </div>
   );
 };
