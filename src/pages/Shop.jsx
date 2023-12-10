@@ -5,20 +5,21 @@ const Shop = () => {
   const db = getDatabase();
   const [allproducts, setallproducts] = useState([]);
   const [searchTerm, setsearchTerm] = useState("");
-  const [filteredProducts, setFilteredProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState(allproducts);
   const [sortOrder, setSortOrder] = useState("ascending");
 
   async function getallproducts() {
     const allProduct = ref(db, "products/");
     onValue(allProduct, (snapshot) => {
       const data = snapshot.val();
-      setallproducts(data);
+      setallproducts(Object.values(data));
     });
   }
   useEffect(() => {
     const fetchData = async () => {
       await getallproducts();
-      setFilteredProducts(Object.values(allproducts));
+      console.log(allproducts);
+      setFilteredProducts(allproducts);
     };
     fetchData();
   }, []);
@@ -26,7 +27,10 @@ const Shop = () => {
   //filtering
   const handleFilter = (e) => {
     const filterValue = e.target.value;
-    if (filterValue === "laptops") {
+    if (filterValue === "all") {
+      const filteredData = allproducts;
+      setFilteredProducts(Object.values(filteredData));
+    } else if (filterValue === "laptops") {
       const filteredData = allproducts.filter(
         (item) => item.category === filterValue
       );
@@ -121,8 +125,6 @@ const Shop = () => {
         (item) => item.category === filterValue
       );
       setFilteredProducts(filteredData);
-    } else if (filterValue === "all") {
-      setFilteredProducts(Object.values(allproducts));
     }
   };
   //filtering
@@ -138,20 +140,21 @@ const Shop = () => {
 
     const sortedData = [...filteredProducts].sort((a, b) => {
       if (selectedSortOrder === "ascending") {
-        return a.title.localeCompare(b.title);
+        return a.title?.localeCompare(b.title);
       } else {
-        return b.title.localeCompare(a.title);
+        return b.title?.localeCompare(a.title);
       }
     });
 
     setFilteredProducts(sortedData);
   };
   //sorting
+  //search
   function handleSearch() {
-    const filteredProducts = arr.filter((item) => {
-      return item.title.toLowerCase().includes(searchTerm.toLowerCase());
+    const filteredProduct = filteredProducts.filter((item) => {
+      return item.title?.toLowerCase().includes(searchTerm.toLowerCase());
     });
-    setFilteredProducts(filteredProducts);
+    setFilteredProducts(filteredProduct);
   }
 
   //search
@@ -205,13 +208,11 @@ const Shop = () => {
         </div>
       </div>
       <div className="bg-black h-[90vh] flex flex-wrap justify-center overflow-y-scroll">
-        {filteredProducts.length === 0 && searchTerm !== "" ? (
-          <div className="text-white">No matching products found.</div>
-        ) : (
-          filteredProducts.map((item) => {
-            return <ProductCard info={item} key={item.id} />;
-          })
-        )}
+        {!filteredProducts ? <div>No results found</div> : ""}
+        {filteredProducts.map((item) => {
+          return <ProductCard info={item} key={item.id} />;
+        })}
+
         {}
       </div>
     </div>
