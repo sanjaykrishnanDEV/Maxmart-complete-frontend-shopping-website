@@ -9,20 +9,17 @@ const Login = () => {
   const auth = getAuth();
   async function handleLogin(e) {
     e.preventDefault();
-    await signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // Signed in
-        const user = userCredential.user;
-        toast.success("logging you in")
-        navigate("/checkout")
-        // ...
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        toast.error(errorMessage)
-      });
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+      toast.success("Logging you in");
+      navigate("/checkout");
+    } catch (error) {
+      const errorMessage = error.message;
+      toast.error(errorMessage);
+    }
   }
+  
   return (
     <div>
       <Toaster/>
@@ -37,7 +34,7 @@ const Login = () => {
                 <form
                   className="space-y-4 md:space-y-6"
                
-                  onSubmit={(e)=>handleLogin(e)}
+                  onSubmit={handleLogin}
                 >
                   <div>
                     <label

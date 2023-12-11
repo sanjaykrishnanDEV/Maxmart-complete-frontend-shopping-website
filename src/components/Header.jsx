@@ -14,18 +14,15 @@ const Header = () => {
   const currentUser = useAuth();
   console.log(currentUser?.currentUser);
   console.log(Object.keys(currentUser?.currentUser).length);
-  const value =Object.keys(currentUser?.currentUser).length
-  function handleSignout() {
-    signOut(auth)
-      .then(() => {
-        // Sign-out successful.
-        toast.success("Sign-out successful");
-        navigate("/home");
-      })
-      .catch((error) => {
-        toast.error(error.message);
-        // An error happened.
-      });
+  const value = Object.keys(currentUser?.currentUser).length;
+  async function handleSignout() {
+    try {
+      await signOut(auth);
+      toast.success("Sign-out successful");
+      navigate("/home");
+    } catch (error) {
+      toast.error(error.message);
+    }
   }
   return (
     <div className="h-12 w-full bg-red-600 flex justify-between items-center">
@@ -77,7 +74,20 @@ const Header = () => {
           </div>
         </div>
         <>
-          {value ? <span onClick={handleSignout}>Logout</span> : <span>Login</span>}
+          {value ? (
+            <span
+              className=" bg-slate-200 rounded-md p-1 cursor-pointer"
+              onClick={handleSignout}
+            >
+              Logout
+            </span>
+          ) : (
+            <NavLink to={"login"}>
+            <span className=" bg-slate-200 rounded-md p-1 cursor-pointer">
+              Login
+            </span>
+            </NavLink>
+          )}
         </>
       </div>
     </div>

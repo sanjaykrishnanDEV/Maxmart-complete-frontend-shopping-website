@@ -24,7 +24,7 @@ const ProductCard = ({ info }) => {
   return (
     <div 
     className="">
-      <Toaster position="top-right" />
+      <Toaster  />
       <div
       onClick={()=>handleToDetails(info?.id)}
         className=" hover:scale-105 cursor-pointer border-2 shadow-xl
@@ -41,9 +41,9 @@ const ProductCard = ({ info }) => {
         <div className=" text-center font-medium ">
           <Link to={`/shop/${info.id}`}>{info?.title}</Link>
         </div>
-        <div className="flex items-center justify-center ">
+        <div className="flex items-center justify-between px-3 mt-1 w-full ">
           <p>${info?.price}</p>
-          <button onClick={addToCart} className=" w-fit bg-slate-300">
+          <button onClick={addToCart} className=" w-fit bg-slate-300 rounded-lg p-1 hover:bg-white hover:text-base">
             Add to cart
           </button>
         </div>

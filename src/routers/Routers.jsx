@@ -19,11 +19,11 @@ const Routers = () => {
       <Route path="shop" element={<Shop />} />
       <Route path="shop/:id" element={<Productdetails />} />
       <Route path="cart" element={<Cart />} />
-      <Route path="/*" element={<ProtectedRoute />}>
+      {/* <Route path="/*" element={<ProtectedRoute />}>
         <Route path="dashboard/allproducts" element={<Allproducts />} />
         <Route path="dashboard/addproducts" element={<Addproducts />} />
         <Route path="dashboard" element={<Dashboard />} />
-      </Route>
+      </Route> */}
       <Route
         path="checkout"
         element={
@@ -31,9 +31,16 @@ const Routers = () => {
             <Checkout />
           </ProtectedRoute>
         }
-      ></Route>
+      />
+      <Route
+        path="dashboard"
+        element={
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        }
+      />
 
-      <Route path="dashboard" element={<Dashboard />} />
       <Route path="login" element={<Login />} />
       <Route path="signup" element={<Signup />} />
     </Routes>
