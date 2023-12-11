@@ -3,12 +3,33 @@ import { CiShop } from "react-icons/ci";
 import { NavLink } from "react-router-dom";
 import { CiHeart } from "react-icons/ci";
 import { useSelector } from "react-redux";
-
+import useAuth from "./customhooks/useAuth";
+import { getAuth, signOut } from "firebase/auth";
+import { Toaster, toast } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 const Header = () => {
-  const cartValue = useSelector(store=>store.cart)
-  console.log(cartValue.totalQty)
+  const auth = getAuth();
+  const navigate = useNavigate();
+  const cartValue = useSelector((store) => store.cart);
+  const currentUser = useAuth();
+  console.log(currentUser?.currentUser);
+  console.log(Object.keys(currentUser?.currentUser).length);
+  const value =Object.keys(currentUser?.currentUser).length
+  function handleSignout() {
+    signOut(auth)
+      .then(() => {
+        // Sign-out successful.
+        toast.success("Sign-out successful");
+        navigate("/home");
+      })
+      .catch((error) => {
+        toast.error(error.message);
+        // An error happened.
+      });
+  }
   return (
     <div className="h-12 w-full bg-red-600 flex justify-between items-center">
+      <Toaster />
       <div className="flex text-white font-semibold text-xl">
         <CiShop />
         <NavLink>
@@ -55,13 +76,9 @@ const Header = () => {
             </svg>
           </div>
         </div>
-        <NavLink to={"user"}>
-          <FaUser
-            size={20}
-            color="white"
-            className="border h-10 w-full me-2 rounded-full p-1"
-          />
-        </NavLink>
+        <>
+          {value ? <span onClick={handleSignout}>Logout</span> : <span>Login</span>}
+        </>
       </div>
     </div>
   );
