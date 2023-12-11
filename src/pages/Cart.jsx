@@ -3,12 +3,16 @@ import { cartActions } from "../redux/slices/cartSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { ref, onValue } from "firebase/database";
 import { db } from "../utils/firebase";
+import { Link } from "react-router-dom";
 const Cart = () => {
   const [cartItems, setCartItems] = useState({});
   const [cartSearcher, setcartSearcher] = useState([]);
   const cartItem = useSelector((store) => store.cart.cartItems);
+  const totalAmount = useSelector((store) => store.cart.totalAmount);
+  const totalQty = useSelector((store) => store.cart.totalQty);
 
   console.log(cartItem);
+  console.log(totalAmount);
   useEffect(() => {
     getData();
     getCartIds();
@@ -27,11 +31,17 @@ const Cart = () => {
     console.log(free);
   }
   //console.log(cartItems);
-
+  if (cartItem.length === 0) {
+    return (
+      <div className="h-[50vh] flex justify-center items-center">
+        No items in cart 😪
+      </div>
+    );
+  }
   return (
     <div className="h-[80vh] flex justify-center">
       <div className="w-[80vw]">
-        <table className=" border w-full  table table-auto">
+        <table className="p-4 border w-full  table table-auto">
           <thead className=" bg-slate-700 text-white">
             <tr className=" table-row h-5">
               <td scope="col">Product</td>
@@ -42,7 +52,7 @@ const Cart = () => {
             </tr>
           </thead>
           <tbody>
-            {(!cartItem) ? (
+            {!cartItem ? (
               <div>load</div>
             ) : (
               cartItem.map((item) => {
@@ -51,12 +61,23 @@ const Cart = () => {
             )}
           </tbody>
           <tfoot>
-            <tr>
-              <td>Total</td>
-              <td>{cartItem?.totalAmount}</td>
+            <tr className="border-2">
+              <td colSpan={2}>Total</td>
+              <td>{totalAmount}</td>
+              <td>{totalQty}</td>
             </tr>
           </tfoot>
         </table>
+        <div className="flex mt-2">
+          <Link to="/shop">
+            <button className="me-3 bg-red-500 p-1 rounded-md">
+              Contiue shopping
+            </button>
+          </Link>
+          <Link to="/checkout">
+            <button className=" bg-green-800  p-1 rounded-md text-emerald-50">checkout</button>
+          </Link>
+        </div>
       </div>
     </div>
   );
@@ -78,7 +99,7 @@ function Tr({ item }) {
       <td>{item.price}</td>
       <td>{item.quantity}</td>
       <td
-        onClick={handleDelete(item.id)}
+        onClick={() => handleDelete(item.id)}
         className="bg-red-500 rounded-md cursor-pointer flex justify-center"
       >
         Delete
