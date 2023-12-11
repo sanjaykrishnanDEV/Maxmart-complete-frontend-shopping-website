@@ -9,14 +9,18 @@
 import useAuth from "../components/customhooks/useAuth";
 import { Navigate, Outlet } from "react-router-dom";
 
-const ProtectedRoute = ({ children }) => {
+const ProtectedRoute = () => {
   const { currentUser } = useAuth();
 
   if (!currentUser) {
     return <Navigate to="/login" />;
   }
 
-  return <>{children}</>;
+  return (
+    <>
+      <Outlet />
+    </>
+  );
 };
 
 export default ProtectedRoute;

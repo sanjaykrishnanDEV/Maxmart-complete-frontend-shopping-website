@@ -185,7 +185,7 @@ const Shop = () => {
             <option value="automotive">Automotive</option>
             <option value="motorcycle">Motorcycle</option>
             <option value="lighting">Lighting</option>
-            <option></option>
+           
           </select>
           <div>
             <input
