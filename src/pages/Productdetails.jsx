@@ -34,25 +34,29 @@ const Productdetails = () => {
     toast.success("product added to cart", { icon: "😁😁" });
   }
   function handleSubmitReview(userName, userReview) {
-    const reviewRef = ref(db,"products/" + id+"/reviews/");
-    const reviewKey = push(reviewRef).key; // Generate a unique key (UID)
+    if(!userName && !userReview ){
+      return toast.error("Fill all fields")
+    }
+    const reviewRef = ref(db, "products/" + id + "/reviews/");
+    const reviewKey = push(reviewRef).key;
     const reviews = {
       userName,
       userReview,
     };
     update(child(reviewRef, reviewKey), reviews)
-    .then(() => {
-      console.log("Review added successfully");
-    })
-    .catch((error) => {
-      console.error("Error adding review:", error);
-    });
+      .then(() => {
+        toast.success("Review added successfully");
+        setuserName("");
+        setuserReview("");
+      })
+      .catch((error) => {
+        console.error("Error adding review:", error);
+      });
   }
   // Early return if data is empty
   if (!data) {
     return null;
   }
-  console.log(data)
   return (
     <div>
       <Toaster />
@@ -131,7 +135,7 @@ const Productdetails = () => {
             </div>
           ) : (
             <div className="border p-1">
-              <Reviews id={id}/>
+              <Reviews id={id} />
             </div>
           )}
         </div>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getDatabase, ref, onValue } from "firebase/database";
 import { db } from "../utils/firebase";
 const Reviews = ({ id }) => {
-  console.log(id);
+  
   const [reviews, setReviews] = useState([]);
   useEffect(() => {
     const allreviews = ref(db, "products/" + id + "/reviews/");

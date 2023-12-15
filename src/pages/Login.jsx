@@ -1,17 +1,22 @@
 import React, { useState } from "react";
-import {Toaster,toast} from "react-hot-toast"
+import { Toaster, toast } from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 const Login = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
   const auth = getAuth();
   async function handleLogin(e) {
     e.preventDefault();
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
       const user = userCredential.user;
+
       toast.success("Logging you in");
       navigate("/checkout");
     } catch (error) {
@@ -19,10 +24,10 @@ const Login = () => {
       toast.error(errorMessage);
     }
   }
-  
+
   return (
     <div>
-      <Toaster/>
+      <Toaster />
       <div>
         <section className="bg-gray-50 dark:bg-gray-900">
           <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
@@ -31,11 +36,7 @@ const Login = () => {
                 <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                   Sign in to your account
                 </h1>
-                <form
-                  className="space-y-4 md:space-y-6"
-               
-                  onSubmit={handleLogin}
-                >
+                <form className="space-y-4 md:space-y-6" onSubmit={handleLogin}>
                   <div>
                     <label
                       htmlFor="email"
@@ -92,10 +93,7 @@ const Login = () => {
                         </label>
                       </div>
                     </div>
-                    <span
-                     
-                      className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500"
-                    >
+                    <span className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">
                       Forgot password?
                     </span>
                   </div>

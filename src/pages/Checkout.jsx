@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 const Checkout = () => {
   const [discount, setDiscount] = useState(15);
@@ -52,7 +53,9 @@ const Checkout = () => {
           Total:{totalItems > 0 ? totalAmount + discount : 0}
         </h1>
         <hr />
-        <button className="bg-red-500 rounded-md p-1 text-lime-50 mt-2 w-full">
+        <button 
+        onClick={()=>toast.success("order placed thank you💝")}
+        className="bg-red-500 rounded-md p-1 text-lime-50 mt-2 w-full">
           Place Order
         </button>
       </div>

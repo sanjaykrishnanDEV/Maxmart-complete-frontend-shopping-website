@@ -1,28 +1,17 @@
 import React from "react";
-
 import useAuth from "../components/customhooks/useAuth";
-import { Navigate } from "react-router-dom";
-
-const Adminprivate = ({ children }) => {
+import { Navigate, Outlet } from "react-router-dom";
+const Adminprivate = () => {
   const { currentUser } = useAuth();
-
+  // console.log(currentUser);
+  
   if (!currentUser) {
     return <Navigate to="/login" />;
   }
-  if (!currentUser.email === "admin@gmail.com") {
+  if (!currentUser.email === "test@gmail.com") {
     return <Navigate to="/login" />;
   }
 
-  return <>{children}</>;
+  return <Outlet></Outlet>;
 };
 export default Adminprivate;
-
-// const ProtectedRoute = ({ children }) => {
-//     const { currentUser } = useAuth();
-
-//     if (!currentUser) {
-//       return <Navigate to="/login" />;
-//     }
-
-//     return <>{children}</>;
-//   };

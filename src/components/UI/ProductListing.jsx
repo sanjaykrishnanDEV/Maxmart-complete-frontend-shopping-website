@@ -15,7 +15,7 @@ const ProductListing = () => {
     });
   }
   let arr = [...Object.values(data)];
-  console.log(arr.length);
+  //console.log(arr.length);
 
   return (
     <div className="flex flex-col flex-wrap  h-full overflow-hidden">

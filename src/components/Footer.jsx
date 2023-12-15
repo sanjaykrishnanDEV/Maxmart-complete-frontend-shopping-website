@@ -77,7 +77,6 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* <!-- Main container div: holds the entire content of the footer, including four sections (TW Elements, Products, Useful links, and Contact), with responsive styling and appropriate padding/margins. --> */}
       <div className="mx-6 py-10 text-center md:text-left">
         <div className="grid-1 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
           {/* <!-- TW Elements section --> */}
@@ -94,9 +93,9 @@ export default function Footer() {
               MAXMART
             </h6>
             <p>Your one stop shopping solution</p>
-            <Link to="/dashboard">
+            {/* <Link to="/dashboard">
               <button className="mt-3">Admin login</button>
-            </Link>
+            </Link> */}
           </div>
           {/* <!-- Products section --> */}
           <div className="">
@@ -204,14 +203,26 @@ export default function Footer() {
       </div>
 
       {/* <!--Copyright section--> */}
-      <div className="bg-neutral-200 p-6 text-center dark:bg-neutral-700">
-        <span>© 2023 Copyright:</span>
-        <a
-          className="font-semibold text-neutral-600 dark:text-neutral-400"
-          href="https://tailwind-elements.com/"
-        >
-          sanjaykrishnan
-        </a>
+      <div className="bg-neutral-200 p-6 text-center flex  justify-evenly items-center flex-wrap dark:bg-neutral-700">
+        <div>
+          <p>admin login</p>
+          <p>id:test@gmail.com</p>
+          <p>password:testtest</p>
+        </div>
+        <div>
+          <span>© 2023 Copyright:</span>
+          <a
+            className="font-semibold text-neutral-600 dark:text-neutral-400"
+            href="https://tailwind-elements.com/"
+          >
+            sanjaykrishnan
+          </a>
+        </div>
+        <div>
+          <p>user login</p>
+          <p>id:useruser@gmail.com</p>
+          <p>password:user123</p>
+        </div>
       </div>
     </footer>
   );

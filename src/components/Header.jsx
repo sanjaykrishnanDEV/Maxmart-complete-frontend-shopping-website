@@ -7,14 +7,17 @@ import useAuth from "./customhooks/useAuth";
 import { getAuth, signOut } from "firebase/auth";
 import { Toaster, toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { adminMail } from "../utils/constants";
 const Header = () => {
   const auth = getAuth();
   const navigate = useNavigate();
   const cartValue = useSelector((store) => store.cart);
   const currentUser = useAuth();
-  console.log(currentUser?.currentUser);
-  console.log(Object.keys(currentUser?.currentUser).length);
+  // console.log(currentUser?.currentUser);
+  // console.log(Object.keys(currentUser?.currentUser).length);
   const value = Object.keys(currentUser?.currentUser).length;
+  const admin = currentUser?.currentUser.email === adminMail;
+  //console.log(admin);
   async function handleSignout() {
     try {
       await signOut(auth);
@@ -83,10 +86,19 @@ const Header = () => {
             </span>
           ) : (
             <NavLink to={"login"}>
-            <span className=" bg-slate-200 rounded-md p-1 cursor-pointer">
-              Login
-            </span>
+              <span className=" bg-slate-200 rounded-md p-1 cursor-pointer">
+                Login
+              </span>
             </NavLink>
+          )}
+          {admin ? (
+            <NavLink to={"dashboard"}>
+              <span className=" bg-slate-200 rounded-md p-1 cursor-pointer">
+                Dashboard
+              </span>
+            </NavLink>
+          ) : (
+            ""
           )}
         </>
       </div>
