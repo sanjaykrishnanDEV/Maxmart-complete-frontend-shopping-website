@@ -47,8 +47,8 @@ const Cart = () => {
               <td scope="col">Product</td>
               <td scope="col">Name</td>
               <td scope="col">Price $</td>
-              <td scope="col">Qty</td>
-              <td scope="col">Delete</td>
+              <td scope="col" className="text-center">Qty</td>
+              <td scope="col" className="text-center">Delete</td>
             </tr>
           </thead>
           <tbody>
@@ -75,7 +75,9 @@ const Cart = () => {
             </button>
           </Link>
           <Link to="/checkout">
-            <button className=" bg-green-800  p-1 rounded-md text-emerald-50">checkout</button>
+            <button className=" bg-green-800  p-1 rounded-md text-emerald-50">
+              checkout
+            </button>
           </Link>
         </div>
       </div>
@@ -90,17 +92,32 @@ function Tr({ item }) {
   function handleDelete(id) {
     dispatch(cartActions.deleteItem(id));
   }
+  function handleminus(id){
+    //alert('love'+item.id)
+    dispatch(cartActions.minusItem(id))
+  }
+  function plusItem(id){
+    //alert('love'+item.id)
+    dispatch(cartActions.plusItem(id))
+  }
   return (
-    <tr className="" key={item.id}>
+    <tr className="border" key={item.id}>
       <td>
         <img src={item.image[0]} className="h-10" alt="Product" />
       </td>
       <td>{item.title}</td>
       <td>{item.price}</td>
-      <td>{item.quantity}</td>
+      {/* <td>{item.quantity}</td> */}
+      <td>
+        <div className="flex justify-between items-center">
+          <button onClick={()=>handleminus(item.id)} className="rounded-full border px-3 cursor-pointer bg-red-400 hover:bg-red-700">-</button>
+          {item.quantity}
+          <button onClick={()=>plusItem(item.id)} className="rounded-full border px-3 cursor-pointer bg-green-400 hover:bg-green-700">+</button>
+        </div>
+      </td>
       <td
         onClick={() => handleDelete(item.id)}
-        className="bg-red-500 rounded-md cursor-pointer flex justify-center"
+        className="bg-red-500 rounded-md cursor-pointer flex justify-center mx-3 my-1"
       >
         Delete
       </td>
