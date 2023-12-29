@@ -1,4 +1,4 @@
-import { getDatabase, ref, onValue } from "firebase/database";
+import { getDatabase, ref, get, onValue } from "firebase/database";
 import { useEffect, useState } from "react";
 import ProductCard from "../components/UI/ProductCard";
 const Shop = () => {
@@ -9,17 +9,22 @@ const Shop = () => {
   const [sortOrder, setSortOrder] = useState("ascending");
 
   async function getallproducts() {
-    const allProduct = ref(db, "products/");
-    onValue(allProduct, (snapshot) => {
+    const allProductRef = ref(db, "products/");
+    const snapshot = await get(allProductRef);
+    if (snapshot.exists()) {
       const data = snapshot.val();
-      setallproducts(Object.values(data));
-    });
+      const products = Object.values(data);
+      setallproducts(products);
+      setFilteredProducts(products);
+    } else {
+      console.log("No data available");
+    }
   }
   useEffect(() => {
     const fetchData = async () => {
       await getallproducts();
-      console.log(allproducts);
-      setFilteredProducts(allproducts);
+      setFilteredProducts(() => Object.values(allproducts));
+      setFilteredProducts(() => Object.values(allproducts));
     };
     fetchData();
   }, []);
@@ -29,7 +34,7 @@ const Shop = () => {
     const filterValue = e.target.value;
     if (filterValue === "all") {
       const filteredData = allproducts;
-      setFilteredProducts(Object.values(filteredData));
+      setFilteredProducts(() => Object.values(filteredData));
     } else if (filterValue === "laptops") {
       const filteredData = allproducts.filter(
         (item) => item.category === filterValue
@@ -149,22 +154,27 @@ const Shop = () => {
     setFilteredProducts(sortedData);
   };
   //sorting
+  
   //search
   function handleSearch() {
-    const filteredProduct = filteredProducts.filter((item) => {
+    const filteredProduct = allproducts.filter((item) => {
       return item.title?.toLowerCase().includes(searchTerm.toLowerCase());
     });
     setFilteredProducts(filteredProduct);
   }
 
   //search
-
+  console.log(filteredProducts);
   if (!allproducts) return <div>loading</div>;
   return (
     <div className="h-screen">
       <div>
         <div className="p-2 w-full flex justify-around">
-          <select onChange={handleFilter} className="border p-1">
+          <select
+            onChange={handleFilter}
+            className="border p-1"
+            defaultValue="all"
+          >
             <option value="all">Filter By category</option>
             <option value="laptops">Laptops</option>
             <option value="fragrances">Fragrances</option>
@@ -185,7 +195,6 @@ const Shop = () => {
             <option value="automotive">Automotive</option>
             <option value="motorcycle">Motorcycle</option>
             <option value="lighting">Lighting</option>
-           
           </select>
           <div>
             <input
@@ -208,12 +217,16 @@ const Shop = () => {
         </div>
       </div>
       <div className="bg-black h-[90vh] flex flex-wrap justify-center overflow-y-scroll">
-        {!filteredProducts ? <div>No results found</div> : ""}
+        {filteredProducts.length === 0
+          ? allproducts.map((item) => {
+              return <ProductCard info={item} key={item.id} />;
+            })
+          : ""}
+
         {filteredProducts.map((item) => {
           return <ProductCard info={item} key={item.id} />;
         })}
 
-        {}
       </div>
     </div>
   );
