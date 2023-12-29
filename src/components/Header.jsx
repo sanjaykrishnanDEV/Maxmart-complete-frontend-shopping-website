@@ -8,6 +8,7 @@ import { getAuth, signOut } from "firebase/auth";
 import { Toaster, toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { adminMail } from "../utils/constants";
+import { Link } from "react-router-dom";
 const Header = () => {
   const auth = getAuth();
   const navigate = useNavigate();
@@ -33,7 +34,9 @@ const Header = () => {
       <div className="flex text-white font-semibold text-xl">
         <CiShop />
         <NavLink>
-          <span className="cursor-pointer">MAXMART</span>
+          <Link to={"/"}>
+            <span className="cursor-pointer">MAXMART</span>
+          </Link>
         </NavLink>
       </div>
       <div className="w-1/3 flex justify-between text-white font-medium">
