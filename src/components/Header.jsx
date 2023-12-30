@@ -51,11 +51,11 @@ const Header = () => {
         </NavLink>
       </div>
       <div className="flex w-1/3 justify-evenly items-center">
-        <CiHeart
+{/*         <CiHeart
           size={15}
           color="black"
           className="border h-10 w-fit me-2 rounded-full p-1"
-        />
+        /> */}
         <div className="h-20 flex justify-center items-center">
           <div className="relative py-2">
             <div className="t-0 absolute left-3">
