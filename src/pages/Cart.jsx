@@ -3,7 +3,7 @@ import { cartActions } from "../redux/slices/cartSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { ref, onValue } from "firebase/database";
 import { db } from "../utils/firebase";
-import { Link } from "react-router-dom";
+import { Link,Navigate } from "react-router-dom";
 const Cart = () => {
   const [cartItems, setCartItems] = useState({});
   const [cartSearcher, setcartSearcher] = useState([]);
@@ -32,11 +32,7 @@ const Cart = () => {
   }
   //console.log(cartItems);
   if (cartItem.length === 0) {
-    return (
-      <div className="h-[50vh] flex justify-center items-center">
-        No items in cart 😪
-      </div>
-    );
+    return <Navigate to="/" />;
   }
   return (
     <div className="h-[80vh] flex justify-center">
