@@ -142,16 +142,24 @@ export default function Footer() {
               Useful links
             </h6>
             <p className="mb-4">
-              <a className="text-neutral-600 dark:text-neutral-200">Pricing</a>
+              <a
+                href="/home"
+                className="text-neutral-600 dark:text-neutral-200">Pricing</a>
             </p>
             <p className="mb-4">
-              <a className="text-neutral-600 dark:text-neutral-200">Settings</a>
+              <a
+                href="/home"
+                className="text-neutral-600 dark:text-neutral-200">Settings</a>
             </p>
             <p className="mb-4">
-              <a className="text-neutral-600 dark:text-neutral-200">Orders</a>
+              <a
+                href="/home"
+                className="text-neutral-600 dark:text-neutral-200">Orders</a>
             </p>
             <p>
-              <a className="text-neutral-600 dark:text-neutral-200">Help</a>
+              <a 
+                href="/home"
+                className="text-neutral-600 dark:text-neutral-200">Help</a>
             </p>
           </div>
           {/* <!-- Contact section --> */}
